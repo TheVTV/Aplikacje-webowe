@@ -11,73 +11,100 @@
 </head>
 <body>
     <nav>
-        <a href="#">Strona Główna</a>
+        <a class="active" href="#">Strona Główna</a>
         <a href="#">Projekty</a>
         <a href="#">O nas</a>
         <a href="#">Kontakt</a>
     </nav>
     <div class="main">
-        <p>11111111111111111111..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
-        <p>Some text some text some text some text..</p>
+        <div class="header">
+            <p class="title">Zespół Virtuals</p>
+            <p id="typewriter">Z pasji do gier, z pasji do game-devu</p>
+        </div>
+        <div class="section" style="opacity: 0;">
+        </div>
+        <div class="section">
+            <div class="text">Kim jesteśmy?</div>
+            <div class="container">
+                
+                <div class="image">
+                    <img src="images/about.jpg">
+                </div>
+                <div class="subsection" style="margin-left: 5vw;">
+                    <p class="description">Jesteśmy Virtuals, grupą pasjonatów gier i Game Devu. Wspólnie tworzymy gry aby poznać zakątki branży wytwarzania gier. </p>
+                    <button class="button">Czytaj Dalej</button>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="text">Nad czym aktualnie pracujemy?</div>
+            <div class="container">
+                <div class="subsection" style="margin-right: 5vw;">
+                    <p class="description">Aktualnie nasze prace skupiają się na grze "Brewer", która opowiada o (nie)zwykłych przygodach (nie)zwyczajnego studenta. 
+                        Stylem przypomina połączenie Pokemonów i Potion Crafta.</p>
+                    <button class="button">Czytaj Dalej</button>
+                </div>
+                <div class="image">
+                    <img src="images/138.png">
+                </div>
+            </div>
+            <footer>Strona wykonana przez: Bartosz Wójcik</footer>
+        </div>
+        
+        
+        
     </div>
+    <!-- <script>
+        let view = document.getElementsByClassName("background");     
+        const imageDir = "images/";
+        const delayInSeconds = 2; //more then #view transition timing
+        const totalImages = 3; //0.png; 1.png; ...; 4.png;
+        var i = 0;
+        const  changeImage = () => {
+            i += 1;
+            if(i > totalImages) {i = 1;}
+            view[0].style.backgroundImage = `url('${imageDir}bwr${i}.png')`;
+        };
+        changeImage(); //call immediately without having to wait for delayInSeconds
+        setInterval(changeImage, delayInSeconds * 1000);
+        </script> -->
+        <script>
+            var i = 0;
+            var j = 0;
+            const txtList = ["Z pasji do gier", "Z pasji do Game Devu", "Z pasji do programowania"];
+            var speed = 50;
+            const textElem = document.getElementById("typewriter");
+            let txt = "> ";
+            let pointer = "|"
+
+            function typeWriterStart() {
+              if (i < txtList[j].length) {
+                txt += txtList[j][i]
+                textElem.innerHTML = txt + pointer;
+                i++;
+                setTimeout(typeWriterStart, speed);
+              }
+              else{
+                i--;
+                setTimeout(typeWriterEnd, 2000);
+              }
+            }
+            function typeWriterEnd() {
+              if (i >= 0) {
+                txt = txt.slice(0,-1);
+                textElem.innerHTML = txt + pointer;
+                i--;
+                setTimeout(typeWriterEnd, speed);
+              }
+              else{
+                i++;
+                if(j == txtList.length-1) {j = 0;}
+                else {j++;}
+                setTimeout(typeWriterStart, 1000);
+              }
+            }
+            typeWriterStart();
+        </script>
 </body>
 
 </html>
