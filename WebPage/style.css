@@ -184,3 +184,51 @@ footer {
   background-color: #16437e;
   color: #ffffff;
 }
+
+input[type="text"],
+select {
+  width: 10vw;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  border-radius: 8px;
+}
+
+input[type="submit"] {
+  width: 10vw;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  border-radius: 8px;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+  border: 3px solid #555;
+}
+
+select {
+  width: 28vw;
+}
+
+textarea {
+  width: 24vw;
+  height: 20vh;
+  padding: 12px 20px;
+  margin: 8px 0 0 0;
+  background-color: #f8f8f8;
+  resize: none;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  font-family: inherit;
+  border-radius: 8px;
+}

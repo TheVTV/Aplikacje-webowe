@@ -17,7 +17,7 @@
       <a href="index.html">Strona Główna</a>
       <a href="#">Projekty</a>
       <a class="active" href="#">O nas</a>
-      <a href="#">Kontakt</a>
+      <a href="contact.html">Kontakt</a>
     </nav>
     <div class="main">
       <div class="section">
@@ -127,61 +127,5 @@
         <footer>Strona wykonana przez: Bartosz Wójcik</footer>
       </div>
     </div>
-    <!-- <script>
-        let view = document.getElementsByClassName("background");     
-        const imageDir = "images/";
-        const delayInSeconds = 2;
-        const totalImages = 3; 
-        var i = 0;
-        function changeImage() {
-            i += 1;
-            if(i > totalImages) {i = 1;}
-            view[0].style.backgroundImage = `url('${imageDir}bwr${i}.png')`;
-        }
-        changeImage();
-        setInterval(changeImage, delayInSeconds * 1000);
-        </script> -->
-    <script>
-      var i = 0;
-      var j = 0;
-      const txtList = [
-        "Z pasji do gier",
-        "Z pasji do Game Devu",
-        "Z pasji do programowania",
-      ];
-      var speed = 50;
-      const textElem = document.getElementById("typewriter");
-      let txt = "> ";
-      let pointer = "|";
-
-      function typeWriterStart() {
-        if (i < txtList[j].length) {
-          txt += txtList[j][i];
-          textElem.innerHTML = txt + pointer;
-          i++;
-          setTimeout(typeWriterStart, speed);
-        } else {
-          i--;
-          setTimeout(typeWriterEnd, 2000);
-        }
-      }
-      function typeWriterEnd() {
-        if (i >= 0) {
-          txt = txt.slice(0, -1);
-          textElem.innerHTML = txt + pointer;
-          i--;
-          setTimeout(typeWriterEnd, speed);
-        } else {
-          i++;
-          if (j == txtList.length - 1) {
-            j = 0;
-          } else {
-            j++;
-          }
-          setTimeout(typeWriterStart, 1000);
-        }
-      }
-      typeWriterStart();
-    </script>
   </body>
 </html>
