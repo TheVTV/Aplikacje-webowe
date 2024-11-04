@@ -41,7 +41,7 @@ nav {
   flex-flow: row wrap;
   justify-content: center;
   overflow: hidden;
-  background-color: #333;
+  background-color: #997017;
   position: fixed;
   top: 0;
   left: 0;
@@ -110,7 +110,11 @@ nav a:hover {
 
 .section {
   position: relative;
-  background: linear-gradient(90deg, rgb(0, 35, 88) 0%, rgb(6, 92, 98) 100%);
+  background: linear-gradient(
+    90deg,
+    rgb(221, 182, 96) 0%,
+    rgb(162, 117, 25) 100%
+  );
   display: flex;
   flex-flow: row wrap;
   font-size: 40px;
@@ -305,5 +309,9 @@ textarea {
   textarea {
     width: 250px;
     height: 20vh;
+  }
+  nav a {
+    padding: 14px 10px;
+    font-size: 14px;
   }
 }
