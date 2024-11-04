@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtuals</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Strona Główna</a>
+      <a class="active" href="#">Projekty</a>
+      <a href="about.html">O nas</a>
+      <a href="contact.html">Kontakt</a>
+    </nav>
+    <div class="main">
+      <div class="section">
+        <div class="text">Brewer</div>
+        <div class="containerL">
+          <div class="image">
+            <img id="image" src="images/bwr.png" />
+          </div>
+          <div class="subsectionL">
+            <p class="description">
+              Od lat studenci na uczelni nie trzymają się zbyt dobrze: marazm
+              społeczny, kac morderca i niemożliwe do zdania egzaminy. Wszystko
+              za sprawą zaginięcia zaklinacza chmielu tworzącego trunki niczym z
+              niebios, które jako jedyne działały zbawiennie na marny los
+              studentów. Sam jesteś jednym z nich, piwo to twoje paliwo i
+              postanawiasz zakończyć męki tego świata wypełniając misję
+              legendarnego zaklinacza. Czy podołasz temu zadaniu?
+              <br />
+              <br />
+              <a
+                href="https://agh-code-industry.github.io/brewer/index.html"
+                target="_blank"
+                style="text-decoration: none"
+              >
+                <button class="button">Pełny opis (GDD)</button>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="text">To tyle!</div>
+        <div class="container">
+          <div class="subsection">
+            <p class="description">
+              Na ten moment to tyle projektów! Ale kto wie, może za niedługo
+              zaczniemy pracować nad czymś nowym? ;)
+            </p>
+          </div>
+        </div>
+        <footer>Strona wykonana przez: Bartosz Wójcik</footer>
+      </div>
+    </div>
+  </body>
+  <script>
+    let view = document.getElementById("image");
+    const imageDir = "images/";
+    const delayInSeconds = 2;
+    const totalImages = 3;
+    var i = 0;
+    function changeImage() {
+      i += 1;
+      if (i > totalImages) {
+        i = 1;
+      }
+      view.src = `${imageDir}bwr${i}.png`;
+    }
+    changeImage();
+    setInterval(changeImage, delayInSeconds * 1000);
+  </script>
+</html>

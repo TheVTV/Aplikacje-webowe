@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtuals</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Strona Główna</a>
+      <a href="projects.html">Projekty</a>
+      <a href="about.html">O nas</a>
+      <a class="active" href="#">Kontakt</a>
+    </nav>
+    <div class="main">
+      <div class="section">
+        <div class="text">Kontakt</div>
+        <div class="container">
+          <div class="subsection">
+            <p class="description">
+              Masz jakieś pytania? Chcesz do nas dołączyć? Wypełnij formularz
+              kontaktowy a my na pewno się do ciebie odezwiemy!
+            </p>
+            <form>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Imię"
+                value=""
+              />
+              <input
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Email"
+                value=""
+              />
+              <br />
+              <select name="subject" placeholder="Temat rozmowy">
+                <option value="def">Wybierz temat rozmowy...</option>
+                <option value="apply">Chcę do was dołączyć</option>
+                <option value="offer">Mam propozycję biznesową</option>
+                <option value="question">Chcę zadać pytanie</option>
+                <option value="other">Inne</option>
+              </select>
+              <br />
+
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Wiadomość"
+                value=""
+              ></textarea>
+              <br />
+              <input type="submit" value="Wyślij" />
+            </form>
+          </div>
+        </div>
+        <footer>Strona wykonana przez: Bartosz Wójcik</footer>
+      </div>
+    </div>
+    <script>
+      const form = document.querySelector("form");
+      const inputMessage = form.querySelector("textarea");
+      const inputSelect = form.querySelector("select");
+      const inputName = form.querySelector("input[name=name]");
+      const inputEmail = form.querySelector("input[name=email]");
+      const regEmail = /\S+@\S+\.\S+/;
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (inputName.value.length == 0) {
+          alert("Wpisz Imię!");
+        } else if (!regEmail.test(inputEmail.value)) {
+          alert("Wpisz poprawny adres email!");
+        } else if (inputSelect.selectedIndex == 0) {
+          alert("Wybierz temat rozmowy!");
+        } else if (inputMessage.value.length == 0) {
+          alert("Wpisz wiadomość!");
+        } else {
+          form.submit();
+        }
+      });
+    </script>
+  </body>
+</html>
