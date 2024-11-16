@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ćwiczenie 1</title>
+    <style>
+      .main {
+        position: absolute;
+        left: 40%;
+        right: 40%;
+        top: 30%;
+        text-align: center;
+      }
+      #time {
+        font-size: 30px;
+        color: white;
+      }
+      button {
+        background-color: white;
+        border-style: none;
+        height: 30px;
+        width: 100px;
+      }
+      body {
+        background-color: rgb(63, 63, 63);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div id="time">Generator haseł</div>
+      <form>
+        <input id="min" placeholder="Minimalna liczba znaków" /><br />
+        <input id="max" placeholder="Maksymalna liczba znaków" /><br />
+        <input type="checkbox" id="upper" />
+        <label for="upper">Czy wielkie litery</label>
+        <br />
+        <input type="checkbox" id="special" />
+        <label for="special">Czy znaki specjalne</label><br />
+        <button id="start">Generuj hasło</button>
+      </form>
+    </div>
+    <script>
+      const lowerLetters = "abcdefghijklmnopqrstuvwxyz";
+      const upperLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const special = "1234567890!@#$%^&*()?";
+
+      function generate() {
+        var min = parseInt(document.getElementById("min").value);
+        var max = parseInt(document.getElementById("max").value);
+        var upper = document.getElementById("upper").checked;
+        var spec = document.getElementById("special").checked;
+
+        var password = "";
+        var chars = lowerLetters;
+        if (upper == true) {
+          chars += upperLetters;
+        }
+        if (spec == true) {
+          chars += special;
+        }
+
+        var len = Math.floor(Math.random() * (max - min + 1)) + min;
+        console.log(len);
+        for (let i = 0; i < len; i++) {
+          password += chars[Math.floor(Math.random() * chars.length)];
+        }
+        alert(password);
+      }
+      document.getElementById("start").addEventListener("click", generate);
+    </script>
+  </body>
+</html>
