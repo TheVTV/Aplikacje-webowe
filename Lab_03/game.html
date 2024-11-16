@@ -282,13 +282,13 @@
       });
 
       backgroundImage.onload = () => {
-        drawBackground(); // Narysuj tło, gdy obraz zostanie załadowany
+        drawBackground();
       };
 
       resetProgressButton.addEventListener("click", () => {
-        localStorage.removeItem("highScore"); // Usuń zapisany wynik
-        highScore = 0; // Zresetuj wynik w grze
-        highScoreElement.textContent = highScore; // Aktualizuj tekst w menu
+        localStorage.removeItem("highScore");
+        highScore = 0;
+        highScoreElement.textContent = highScore;
         alert("Najwyższy wynik został zresetowany!");
       });
     </script>
