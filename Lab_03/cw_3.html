@@ -1,35 +1,122 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ćwiczenie 2</title>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ćwiczenie 3</title>
     <style>
-        body {
-            background-color: #8b8b8b;
-        }
-        .container {
-            display: flex;
-        }
-        .container div, .container img {
-            width: 100px;
-            height: 100px;
-            display: block;
-            margin: 5px;
-        }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+      img {
+        max-width: 100px;
+        height: auto;
+      }
+      #controls {
+        margin-bottom: 20px;
+      }
     </style>
-</head>
-<body>
-    <a href="index.html" style="color: red; text-decoration: none; background-color: #00A4EF;">Wróć do ćwiczeń</a>
-    <div class="container">
-        <div style="background-color: #F25022;"></div>
-        <div style="background-color: #7FBA00;"></div>
+  </head>
+  <body>
+    <div id="controls">
+      <input type="text" id="search" placeholder="Wpisz frazę do filtrowania" />
+      <select id="sort">
+        <option value="original">Oryginalna kolejność</option>
+        <option value="asc">Rosnąco</option>
+        <option value="desc">Malejąco</option>
+      </select>
     </div>
-    <div class="container">
-        <div style="background-color: #00A4EF;"></div>
-        <div style="background-color: #FFB900;"></div>
-        <img src="windows.jpg" alt="Logo Windows">
-    </div>
-</body>
+    <table>
+      <thead>
+        <tr>
+          <th>Zdjęcie</th>
+          <th>Tytuł</th>
+          <th>Opis</th>
+        </tr>
+      </thead>
+      <tbody id="data-table"></tbody>
+    </table>
 
+    <script>
+      const apiURL = "https://dummyjson.com/products";
+      let data = [];
+      let filteredData = [];
+
+      const searchInput = document.getElementById("search");
+      const sortSelect = document.getElementById("sort");
+      const tableBody = document.getElementById("data-table");
+
+      async function fetchData() {
+        try {
+          const response = await fetch(apiURL);
+          const result = await response.json();
+          data = result.products.slice(0, 30);
+          filteredData = [...data];
+          renderTable(filteredData);
+        } catch (error) {
+          alert("Błąd podczas pobierania danych:", error);
+        }
+      }
+
+      function renderTable(items) {
+        tableBody.innerHTML = "";
+        items.forEach((item) => {
+          const row = `
+                    <tr>
+                        <td><img src="${item.thumbnail}" alt="${item.title}"></td>
+                        <td>${item.title}</td>
+                        <td>${item.description}</td>
+                    </tr>
+                `;
+          tableBody.innerHTML += row;
+        });
+      }
+
+      function filterData() {
+        const query = searchInput.value.toLowerCase();
+        filteredData = data.filter(
+          (item) =>
+            item.title.toLowerCase().includes(query) ||
+            item.description.toLowerCase().includes(query)
+        );
+        sortData();
+      }
+
+      function sortData() {
+        const sortValue = sortSelect.value;
+        if (sortValue === "asc") {
+          filteredData.sort((a, b) => a.title.localeCompare(b.title));
+        } else if (sortValue === "desc") {
+          filteredData.sort((a, b) => b.title.localeCompare(a.title));
+        } else {
+          filteredData = data.filter(
+            (item) =>
+              item.title
+                .toLowerCase()
+                .includes(searchInput.value.toLowerCase()) ||
+              item.description
+                .toLowerCase()
+                .includes(searchInput.value.toLowerCase())
+          );
+        }
+        renderTable(filteredData);
+      }
+
+      searchInput.addEventListener("input", filterData);
+      sortSelect.addEventListener("change", sortData);
+
+      fetchData();
+    </script>
+  </body>
 </html>

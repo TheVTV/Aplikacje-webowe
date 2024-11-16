@@ -47,8 +47,8 @@
       const special = "1234567890!@#$%^&*()?";
 
       function generate() {
-        var min = document.getElementById("min").value;
-        var max = document.getElementById("max").value;
+        var min = parseInt(document.getElementById("min").value);
+        var max = parseInt(document.getElementById("max").value);
         var upper = document.getElementById("upper").checked;
         var spec = document.getElementById("special").checked;
 
@@ -61,8 +61,8 @@
           chars += special;
         }
 
-        var len = Math.floor(Math.random() * (max - min)) + min;
-
+        var len = Math.floor(Math.random() * (max - min + 1)) + min;
+        console.log(len);
         for (let i = 0; i < len; i++) {
           password += chars[Math.floor(Math.random() * chars.length)];
         }

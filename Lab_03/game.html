@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zombie Shooter</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
+      canvas {
+        display: block;
+      }
+      #menu,
+      #gameOver {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+      #menu {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="menu">
+      <h1>Zombie Shooter</h1>
+      <p>Najwyższy wynik: <span id="highScore">0</span></p>
+      <button id="resetProgress">Resetuj postęp</button>
+      <button id="startGame">Start</button>
+    </div>
+
+    <div id="gameOver">
+      <h1>Koniec gry!</h1>
+      <p>Twój wynik: <span id="finalScore">0</span></p>
+      <button id="backToMenu">Wróć do menu</button>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+    <script>
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const menu = document.getElementById("menu");
+      const gameOverScreen = document.getElementById("gameOver");
+      const startGameButton = document.getElementById("startGame");
+      const backToMenuButton = document.getElementById("backToMenu");
+      const highScoreElement = document.getElementById("highScore");
+      const finalScoreElement = document.getElementById("finalScore");
+      const resetProgressButton = document.getElementById("resetProgress");
+
+      let highScore = localStorage.getItem("highScore") || 0;
+      highScoreElement.textContent = highScore;
+
+      const player = { lives: 3, score: 0 };
+      const zombies = [];
+      let zombieSpawnInterval;
+      const zombieSpeed = 2;
+      let isGameOver = false;
+
+      const aimImage = new Image();
+      aimImage.src = "images/aim.png";
+
+      const heartFullImage = new Image();
+      heartFullImage.src = "images/full_heart.png";
+
+      const heartEmptyImage = new Image();
+      heartEmptyImage.src = "images/empty_heart.png";
+
+      const zombieImage = new Image();
+      zombieImage.src = "images/walkingdead.png";
+
+      const backgroundImage = new Image();
+      backgroundImage.src = "images/board-bg.jpg";
+
+      const sadMusic = new Audio("images/sad-music.mp3");
+
+      let mouseX = canvas.width / 2;
+      let mouseY = canvas.height / 2;
+      let zombieAnimationFrame = 0;
+      let lastZombieFrameTime = 0;
+      const zombieFrameInterval = 50;
+      let zombieSpeedMultiplier = 1;
+      let zombieSpawnIntervalTime = 2000;
+
+      function drawBackground() {
+        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+      }
+
+      function drawPlayerLives() {
+        const heartWidth = 70;
+        const heartHeight = 70;
+        for (let i = 0; i < 3; i++) {
+          const image = i < player.lives ? heartFullImage : heartEmptyImage;
+          ctx.drawImage(
+            image,
+            20 + i * (heartWidth + 10),
+            20,
+            heartWidth,
+            heartHeight
+          );
+        }
+      }
+
+      function drawScore() {
+        ctx.fillStyle = "white";
+        ctx.font = "32px Arial";
+        ctx.fillText(`Wynik: ${player.score}`, canvas.width - 200, 80);
+      }
+
+      function drawZombies() {
+        zombies.forEach((zombie) => {
+          const frameX = (zombieAnimationFrame % 10) * 200;
+          ctx.drawImage(
+            zombieImage,
+            frameX,
+            0,
+            200,
+            312,
+            zombie.x,
+            zombie.y,
+            zombie.size,
+            zombie.size * (312 / 200)
+          );
+        });
+      }
+
+      function updateZombies() {
+        zombies.forEach((zombie) => (zombie.x -= zombie.speed));
+        zombies.forEach((zombie, index) => {
+          if (zombie.x + zombie.size < 0) {
+            player.lives--;
+            zombies.splice(index, 1);
+            drawPlayerLives();
+          }
+        });
+      }
+
+      function drawAim() {
+        const aimSize = 200;
+        ctx.drawImage(
+          aimImage,
+          mouseX - aimSize / 2,
+          mouseY - aimSize / 2,
+          aimSize,
+          aimSize
+        );
+      }
+
+      function detectHit(x, y) {
+        zombies.forEach((zombie, index) => {
+          if (
+            x >= zombie.x &&
+            x <= zombie.x + zombie.size &&
+            y >= zombie.y &&
+            y <= zombie.y + zombie.size
+          ) {
+            player.score += 20;
+            zombies.splice(index, 1);
+          } else {
+            if (player.score >= 5) {
+              player.score -= 5;
+            }
+          }
+        });
+      }
+
+      function spawnZombie() {
+        const size = Math.floor(Math.random() * (150 - 60 + 1)) + 60;
+        const y = canvas.height - size - (250 - ((size - 60) / 90) * 170);
+        zombies.push({
+          x: canvas.width,
+          y,
+          size,
+          speed: (Math.random() * 2 + zombieSpeed) * zombieSpeedMultiplier,
+        });
+      }
+
+      function checkGameOver() {
+        if (player.lives <= 0) {
+          isGameOver = true;
+          sadMusic.play();
+          finalScoreElement.textContent = player.score;
+          gameOverScreen.style.display = "block";
+          clearInterval(zombieSpawnInterval);
+
+          if (player.score > highScore) {
+            highScore = player.score;
+            localStorage.setItem("highScore", highScore);
+            highScoreElement.textContent = highScore;
+          }
+        }
+      }
+      function checkScoreProgression() {
+        var phase = Math.floor(player.score / 100);
+        if (zombieSpeedMultiplier < 1 + 0.2 * phase) {
+          zombieSpeedMultiplier += 0.2;
+        }
+        if (
+          zombieSpawnIntervalTime > 2000 - 200 * phase &&
+          zombieSpawnIntervalTime > 500
+        ) {
+          zombieSpawnIntervalTime = Math.max(
+            500,
+            zombieSpawnIntervalTime - 200
+          );
+          clearInterval(zombieSpawnInterval);
+          zombieSpawnInterval = setInterval(
+            spawnZombie,
+            zombieSpawnIntervalTime
+          );
+        }
+      }
+
+      function gameLoop() {
+        if (isGameOver) return;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackground();
+        drawPlayerLives();
+        drawScore();
+        drawZombies();
+        updateZombies();
+        drawAim();
+
+        const now = performance.now();
+        if (now - lastZombieFrameTime > zombieFrameInterval) {
+          zombieAnimationFrame += 1;
+          if (zombieAnimationFrame >= 10) {
+            zombieAnimationFrame = 0;
+          }
+          lastZombieFrameTime = now;
+        }
+
+        checkGameOver();
+        checkScoreProgression();
+        requestAnimationFrame(gameLoop);
+      }
+
+      canvas.addEventListener("click", () => detectHit(mouseX, mouseY));
+      canvas.addEventListener("mousemove", (event) => {
+        const rect = canvas.getBoundingClientRect();
+        mouseX = event.clientX - rect.left;
+        mouseY = event.clientY - rect.top;
+      });
+
+      function startGame() {
+        menu.style.display = "none";
+        gameOverScreen.style.display = "none";
+        isGameOver = false;
+        player.lives = 3;
+        player.score = 0;
+        zombies.length = 0;
+        zombieSpeedMultiplier = 1;
+        zombieSpawnInterval = setInterval(spawnZombie, 2000);
+        gameLoop();
+      }
+
+      startGameButton.addEventListener("click", startGame);
+      backToMenuButton.addEventListener("click", () => {
+        gameOverScreen.style.display = "none";
+        menu.style.display = "block";
+        sadMusic.pause();
+        sadMusic.currentTime = 0;
+      });
+
+      backgroundImage.onload = () => {
+        drawBackground(); // Narysuj tło, gdy obraz zostanie załadowany
+      };
+
+      resetProgressButton.addEventListener("click", () => {
+        localStorage.removeItem("highScore"); // Usuń zapisany wynik
+        highScore = 0; // Zresetuj wynik w grze
+        highScoreElement.textContent = highScore; // Aktualizuj tekst w menu
+        alert("Najwyższy wynik został zresetowany!");
+      });
+    </script>
+  </body>
+</html>
