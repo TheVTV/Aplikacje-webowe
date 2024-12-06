@@ -1,0 +1,89 @@
+##############
+# Add user
+##############
+POST http://127.0.0.1:3001/api/register
+Content-Type: application/json
+
+{
+    "Email":"test123@gmail.com",
+    "Password":"qwertyuiop"
+}
+
+##############
+# Login user
+##############
+@token = {{login.response.body.token}}
+# @name login
+POST http://127.0.0.1:3001/api/login
+Content-Type: application/json
+
+{
+    "Email":"test123@gmail.com",
+    "Password":"qwertyuiop"
+}
+
+##############
+# Get all books
+##############
+GET http://127.0.0.1:3000/api/books
+
+##############
+# Get book with id
+##############
+GET http://127.0.0.1:3000/api/books/3
+
+##############
+# Add book
+##############
+POST http://127.0.0.1:3000/api/books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "Title": "1984",
+    "Author": "George Orwell",
+    "Date": 1949
+  }
+
+##############
+# Delete book with id
+##############
+DELETE http://127.0.0.1:3000/api/books/11
+Authorization: Bearer {{token}}
+
+##############
+# Get user orders
+##############
+GET http://localhost:3003/api/orders/10
+Accept: application/json
+Authorization: Bearer {{token}}
+
+##############
+# Add order
+##############
+POST http://localhost:3003/api/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "BookID": 0,
+  "Quantity": 3
+}
+
+##############
+# Delete order
+##############
+DELETE http://localhost:3003/api/orders/14
+Authorization: Bearer {{token}}
+
+##############
+# Update order
+##############
+PATCH http://localhost:3003/api/orders/7
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "BookID": 3,
+  "Quantity": 5
+}
