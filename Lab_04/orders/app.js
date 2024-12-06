@@ -44,7 +44,6 @@ const Order = sequelize.define("Order", {
   },
   UserID: {
     type: DataTypes.INTEGER,
-    // allowNull: false,
   },
 });
 
@@ -62,30 +61,26 @@ app.get("/api/orders/:id", async (req, res) => {
   }
 });
 
-async function isBookOk(id) {
-  try {
-    const bookExistsResponse = await fetch(
-      `http://localhost:${BOOKPORT}/api/books/${id}`
-    );
-    const bookExists = await bookExistsResponse.json();
-    if (!bookExistsResponse.ok || !bookExists) {
-      return false;
-    }
-    return true;
-  } catch (error) {
-    return res.status(500).send("Internal Server Error");
-  }
-}
-
 app.post("/api/orders", verifyToken, async (req, res) => {
   try {
     const UserID = req.user.ID;
     const { BookID, Quantity } = req.body;
-    if (!isBookOk) {
-      return res.status(400).send("Book doesn't exist");
+    try {
+      const bookExistsRes = await fetch(
+        `http://localhost:${BOOKPORT}/api/books/${BookID}`
+      );
+      if (!bookExistsRes.ok) {
+        return res.status(400).send("Book doesn't exist");
+      }
+      const bookExists = await bookExistsRes.json();
+      if (!bookExists) {
+        return res.status(400).send("Book doesn't exist");
+      }
+    } catch (error) {
+      return res.status(500).send("Internal Server Error");
     }
     const newOrder = await Order.create({ BookID, Quantity, UserID });
-    res.status(200).json({ orderId: newOrder.orderId });
+    res.status(200).json({ OrderID: newOrder.OrderID });
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }

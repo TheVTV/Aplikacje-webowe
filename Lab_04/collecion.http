@@ -5,7 +5,7 @@ POST http://127.0.0.1:3001/api/register
 Content-Type: application/json
 
 {
-    "Email":"test123@dupa.net",
+    "Email":"test123@gmail.com",
     "Password":"qwertyuiop"
 }
 
@@ -18,7 +18,7 @@ POST http://127.0.0.1:3001/api/login
 Content-Type: application/json
 
 {
-    "Email":"test123@dupa.net",
+    "Email":"test123@gmail.com",
     "Password":"qwertyuiop"
 }
 
@@ -48,13 +48,13 @@ Authorization: Bearer {{token}}
 ##############
 # Delete book with id
 ##############
-DELETE http://127.0.0.1:3000/api/books/2
+DELETE http://127.0.0.1:3000/api/books/11
 Authorization: Bearer {{token}}
 
 ##############
 # Get user orders
 ##############
-GET http://localhost:3003/api/orders/8
+GET http://localhost:3003/api/orders/10
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -66,24 +66,24 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "BookID": 1,
+  "BookID": 0,
   "Quantity": 3
 }
 
 ##############
 # Delete order
 ##############
-DELETE http://localhost:3003/api/orders/6
+DELETE http://localhost:3003/api/orders/14
 Authorization: Bearer {{token}}
 
 ##############
 # Update order
 ##############
-PATCH http://localhost:3003/api/orders/6
+PATCH http://localhost:3003/api/orders/7
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
   "BookID": 3,
-  "Quantity": 3
+  "Quantity": 5
 }

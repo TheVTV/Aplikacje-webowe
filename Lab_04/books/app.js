@@ -65,7 +65,7 @@ app.post("/api/books", verifyToken, async (req, res) => {
   try {
     const { Title, Author, Date } = req.body;
     const book = await Book.create({ Title, Author, Date });
-    res.status(200).json(book);
+    res.status(200).json({ ID: book.ID });
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
