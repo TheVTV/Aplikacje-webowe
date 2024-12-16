@@ -1,0 +1,48 @@
+.blog-container {
+  padding: 2rem;
+}
+
+.articles-grid {
+  display: flex;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  flex-direction: column;
+}
+
+.article-card {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    167deg,
+    rgba(87, 87, 87, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+}
+
+.article-card h2 {
+  margin: 0 0 0.5rem 0;
+}
+
+.article-card p {
+  margin: 0 0 1rem 0;
+  color: #7f8c8d;
+}
+
+.read-more-button {
+  text-decoration: none;
+  color: white;
+  background-color: #546774;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  align-self: flex-end;
+}
+
+.read-more-button:hover {
+  background-color: #2980b9;
+}
